@@ -8,6 +8,7 @@ const keys = {
         database: 'edo',
         charset: 'utf8'
     },
+    secret: '456789-735459-165756-478266'
 }
 
 module.exports = keys

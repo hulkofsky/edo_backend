@@ -29,7 +29,7 @@ projectRouter.get('/', (req,res)=>{
 })
 
 //get project by id
-projectRouter.get('/project:id', (req,res)=>{
+projectRouter.get('/project/:id', (req,res)=>{
     Project.forge({id: req.params.id}).fetch({withRelated: ['project_statuses']}).then(collection=>{
         res.json({success: true, data: collection})
     }).catch(err=>{

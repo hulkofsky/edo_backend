@@ -37,6 +37,11 @@ const tables = [
         min_units INT
     );`,
 
+    `CREATE TABLE IF NOT EXISTS company_contacts(
+        id serial,
+        contact TEXT NOT NULL
+    );`,
+
     // `CREATE TABLE IF NOT EXISTS doc_templates(
     //     doc_template_uid INT NOT NULL PRIMARY KEY,
     //     path TEXT NOT NULL
@@ -49,33 +54,70 @@ const tables = [
     //     path TEXT NOT NULL
     // );`,
 
-    // `CREATE TABLE IF NOT EXISTS banks(
-    //     bank_uid INT NOT NULL PRIMARY KEY,
-    //     name STRING NOT NULL,
-    //     po_template_id TEXT NOT NULL,
-    //     tos_doc_id TEXT,
-    //     documents doc_id[]
-    // );`,
+    `CREATE TABLE IF NOT EXISTS banks(
+        id SERIAL,
+        bank_id INT NOT NULL PRIMARY KEY,
+        name TEXT NOT NULL,
+        po_template_id TEXT NOT NULL,
+        tos_doc_id TEXT,
+        documents INT[]
+    );`,
 
-    // `CREATE TABLE IF NOT EXISTS investors(
-    //     contact JSON NOT NULL,
-    //     password JSON NOT NULL,
-    //     email_conf BOOLEAN NOT NULL,
-    //     phone_conf BOOLEAN NOT NULL,
-    //     bank_uid INT NOT NULL REFERENCES banks (bank_uid),
-    //     bank_details JSON NOT NULL,
-    //     purchases INT[]
-    // );`,
 
-    // `CREATE TABLE IF NOT EXISTS enterpreneurs(
-    //     contact JSON NOT NULL,
-    //     password JSON NOT NULL,
-    //     email_conf BOOLEAN NOT NULL,
-    //     phone_conf BOOLEAN NOT NULL,
-    //     bank_uid STRING NOT NULL,
-    //     bank_details JSON NOT NULL,
-    //     purchases INT[]
-    // );`,
+    `CREATE TABLE IF NOT EXISTS investors(
+        id BIGSERIAL,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        bank_id INT NOT NULL REFERENCES banks (bank_id),
+        password TEXT NOT NULL,
+        account_number TEXT NOT NULL,
+        email_conf BOOLEAN NOT NULL,
+        phone_conf BOOLEAN NOT NULL,
+        purchased_projects INT[],
+        subscribed_projects INT[]
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS purchase_statuses(
+        id SERIAL,
+        status_id INT NOT NULL PRIMARY KEY,
+        status_name TEXT NOT NULL
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS purchases(
+        id BIGSERIAL,
+        investor_id INT NOT NULL,
+        project_id INT NOT NULL,
+        bank_id INT NOT NULL,
+        unit_count INT NOT NULL,
+        unit_price_ils REAL NOT NULL,
+        purchase_date TIMESTAMP NOT NULL,
+        po_doc_id TEXT,
+        status_id INT NOT NULL REFERENCES purchase_statuses (status_id),
+        documents INT[]
+    );`,
+
+    `CREATE TABLE IF NOT EXISTS enterpreneurs(
+        company_name TEXT NOT NULL,
+        vat_number TEXT NOT NULL,
+        ceo_name TEXT NOT NULL,
+        country_of_registration TEXT NOT NULL,
+        company_email TEXT NOT NULL,
+        company_phone TEXT NOT NULL,
+        funding_sum INT NOT NULL,
+        last_year_sales INT NOT NULL,
+        password TEXT NOT NULL,
+        video_url TEXT,
+        docs TEXT[],
+        team_members INT[],
+        
+        email_conf BOOLEAN NOT NULL,
+        phone_conf BOOLEAN NOT NULL,
+        bank_uid TEXT NOT NULL,
+        bank_details JSON NOT NULL,
+        purchases INT[]
+    );`,
 
     `CREATE TABLE IF NOT EXISTS content(
         id serial,

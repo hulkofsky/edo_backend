@@ -183,22 +183,45 @@ module.exports = [
         }` 
     },
     {   //6
-        page_name: 'sign_up_enterpreneur',
+        page_name: 'sign_up',
         en:`{
             "title": "SIGN UP",
             "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             "investor_rb": "Investor",
             "enterpreneur_rb": "Enterpreneur",
-
-            "general_info": "General Information (Required fields)",
-            "general.first_name_field": "Enter your First Name",
-            "general.last_name_field": "Enter your Last Name",
-            "general.email_field": "Enter your Email",
-            "general.phone_field": "Enter your Phone",
-            "general.pass_field": "Enter your Password",
-            "general.confirm_pass_field": "Confirm your Password",
-
-            "team_members": "Team Members (Optional fileds)",
+        
+            "investor.first_name_field": "Enter your First Name",
+            "investor.last_name_field": "Enter your Last Name",
+            "investor.email_field": "Enter your Email",
+            "investor.phone_field": "Enter your Phone",
+            "investor.bank": "Select your Bank",
+            "investor.account": "Enter your Account Number",
+            "investor.pass_field": "Enter your Password",
+            "investor.confirm_pass_field": "Confirm your Password",
+            "investor.i_have_read": "I have read and agree to the",
+            "investor.terms_link": "terms of service",
+        
+            "ent.comp_info_req": "Company Information (Required fields)",
+            "ent.comp_name": "Enter your Company Name",
+            "ent.CEO_name": "Enter CEO Name",
+            "ent.comp_email": "Enter your Company Email",
+            "ent.funding_sum": "Enter a Funding Sum to This Point",
+            "ent.password": "Enter your Password",
+            "ent.confirm_pass": "Confirm your Password",
+            "ent.VAT": "Enter Privat Company Number (VAT)",
+            "ent.comp_phone": "Enter your Company Phone Number",
+            "ent.comp_sales": "Enter your Company Sales in the Last Year",
+        
+            "ent.NDA_signing": "NDA Signing (Required fields)",
+            "ent.pre_signed": "Pre-Signed NDA",
+            "ent.download": "Download File",
+        
+            "ent.comp_info_opt": "Company Information (Optional fileds)",
+            "ent.video_link": "Upload your Company Presentation",
+            "ent.stat_report": "Upload Latest Statement Report",
+            "ent.fin_report": "Upload Latest Financial Report",
+        
+            "ent.team_members": "Team Members (Optional fileds)",
             "team.number_field": "Enter a Number of your Team Members",
             "team.first_name_field": "Enter Team Member First Name",
             "team.last_name_field": "Enter Team Member Last Name",
@@ -213,19 +236,42 @@ module.exports = [
         }`,
         he:`{
             "title": "SIGN UP",
-            "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+	        "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             "investor_rb": "Investor",
             "enterpreneur_rb": "Enterpreneur",
-
-            "general_info": "General Information (Required fields)",
-            "general.first_name_field": "Enter your First Name",
-            "general.last_name_field": "Enter your Last Name",
-            "general.email_field": "Enter your Email",
-            "general.phone_field": "Enter your Phone",
-            "general.pass_field": "Enter your Password",
-            "general.confirm_pass_field": "Confirm your Password",
-
-            "team_members": "Team Members (Optional fileds)",
+        
+            "investor.first_name_field": "Enter your First Name",
+            "investor.last_name_field": "Enter your Last Name",
+            "investor.email_field": "Enter your Email",
+            "investor.phone_field": "Enter your Phone",
+            "investor.bank": "Select your Bank",
+            "investor.account": "Enter your Account Number",
+            "investor.pass_field": "Enter your Password",
+            "investor.confirm_pass_field": "Confirm your Password",
+            "investor.i_have_read": "I have read and agree to the",
+            "investor.terms_link": "terms of service",
+        
+            "ent.comp_info_req": "Company Information (Required fields)",
+            "ent.comp_name": "Enter your Company Name",
+            "ent.CEO_name": "Enter CEO Name",
+            "ent.comp_email": "Enter your Company Email",
+            "ent.funding_sum": "Enter a Funding Sum to This Point",
+            "ent.password": "Enter your Password",
+            "ent.confirm_pass": "Confirm your Password",
+            "ent.VAT": "Enter Privat Company Number (VAT)",
+            "ent.comp_phone": "Enter your Company Phone Number",
+            "ent.comp_sales": "Enter your Company Sales in the Last Year",
+        
+            "ent.NDA_signing": "NDA Signing (Required fields)",
+            "ent.pre_signed": "Pre-Signed NDA",
+            "ent.download": "Download File",
+        
+            "ent.comp_info_opt": "Company Information (Optional fileds)",
+            "ent.video_link": "Upload your Company Presentation",
+            "ent.stat_report": "Upload Latest Statement Report",
+            "ent.fin_report": "Upload Latest Financial Report",
+        
+            "ent.team_members": "Team Members (Optional fileds)",
             "team.number_field": "Enter a Number of your Team Members",
             "team.first_name_field": "Enter Team Member First Name",
             "team.last_name_field": "Enter Team Member Last Name",
@@ -484,20 +530,20 @@ module.exports = [
             "rewiew.print": "Print Document",
             "rewiew.signature": "Signature"
         }` 
-    },
-    {
-        page_name: '',
-        en:``,
-        he:``
-    },
-    {
-        page_name: '',
-        en:``,
-        he:``
-    },
-    {
-        page_name: '',
-        en:``,
-        he:``
-    },
+    }
+    // {
+    //     page_name: '',
+    //     en:``,
+    //     he:``
+    // },
+    // {
+    //     page_name: '',
+    //     en:``,
+    //     he:``
+    // },
+    // {
+    //     page_name: '',
+    //     en:``,
+    //     he:``
+    // },
 ]
