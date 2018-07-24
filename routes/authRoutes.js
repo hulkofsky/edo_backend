@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const Bookshelf = require('../config/database')
 const _ = require('lodash')
 const Validation = require('../utils/validation')
+const {validateUrl} = require('youtube-validate')
 
 const validation = new Validation
 
@@ -169,6 +170,12 @@ router.post('/signupenterpreneur', (req,res)=>{
         return res.json({success: false, message: 'Password validation failed'})
     }
 
+    if(userData.video_url){
+        if(!validation.validateVideoUrl(userData.video_url)){
+            return res.json({success: false, message: 'Video url validation failed'})
+        }
+    }
+
     //bcrypting password
     bcrypt.genSalt(10, (err,salt)=>{
         if (err){
@@ -206,7 +213,7 @@ router.post('/signupenterpreneur', (req,res)=>{
                                             password: userData.password,
                                             email_conf: false,
                                             phone_conf: false,
-                                            // video_url: 'https://www.youtube.com/watch?v=jix05bGkyAQ',
+                                            video_url: userData.video_url || '',
                                             // docs: [1,2,3,4],
                                             // team_members: [1,2,3],
                                             // projects: [1,2,3]
