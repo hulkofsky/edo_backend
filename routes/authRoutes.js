@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {Client} = require('pg')
 const keys = require('../config/keys')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt-nodejs')
 const jwt = require('jsonwebtoken')
 const Bookshelf = require('../config/database')
 const _ = require('lodash')
@@ -236,41 +236,74 @@ router.post('/signupenterpreneur', (req,res)=>{
 
 })
 
-router.post('/signin', (req,res)=>{
-    if(!req.body.email||!req.body.password) {
+//LOGIN
+router.post('/signin', (req,res)=> {
+    const email = req.body.email
+    const password = req.body.password
+    if (!email || !password) {
         res.json({success: false, message: 'Pls enter email and password to sign in'})
-    }else{
-        const query = `SELECT * FROM users WHERE email='${req.body.email}'`
-        postgresClient.query(query, (err, result)=>{
-            if(err) {
-                console.log(err, 'while selecting user from DB')
-                return res.json({success: false, message: 'An error has been occured while getting user from DB'})
-            }
-            if(result.rows[0]) {
-                const user = result.rows[0]
-
-                bcrypt.compare(req.body.password, user.password, (err, isMatch)=>{
-                    if (err) {
-                        console.log(err)
-                        return res.json({success: false, massage: `An error has been occured while comparing passwords ${err}`})
-                    }
-                    if(isMatch) {
-                        console.log(user)
-                        const token = jwt.sign(user, keys.secret, {
-                            expiresIn: 10000 //in seconds
+    } else {
+        Investor
+            .where({email: email})
+            .fetch()
+            .then(investorUser => {
+                if (investorUser) {
+                    console.log(investorUser.attributes.password, 'investor pass in db')
+                    console.log(password, 'entered password')
+                    bcrypt.compare(password, investorUser.attributes.password, (err, isMatch) => {
+                        if (err) {
+                            console.log(err)
+                            return res.json({
+                                success: false,
+                                massage: `An error has been occured while comparing passwords ${err}`
+                            })
+                        }
+                        if (isMatch) {
+                            const token = jwt.sign(investorUser, keys.secret, {
+                                expiresIn: 10000 //in seconds
+                            })
+                            res.json({success: true, token: 'JWT ' + token})
+                        } else {
+                            res.json({success: false, message: 'Authentication failed. Passwords did not match'})
+                        }
+                    })
+                } else {
+                    Enterpreneur
+                        .where({company_email: email})
+                        .fetch()
+                        .then(enterpreneurUser => {
+                            if (enterpreneurUser) {
+                                console.log(enterpreneurUser.attributes.password, 'enterpreneur pass in DB')
+                                console.log(password, 'entered password')
+                                bcrypt.compare(password, enterpreneurUser.attributes.password, (err, isMatch) => {
+                                    if (err) {
+                                        console.log(err)
+                                        return res.json({
+                                            success: false,
+                                            massage: `An error has been occured while comparing passwords ${err}`
+                                        })
+                                    }
+                                    if (isMatch) {
+                                        const token = jwt.sign(enterpreneurUser, keys.secret, {
+                                            expiresIn: 10000 //in seconds
+                                        })
+                                        res.json({success: true, token: 'JWT ' + token})
+                                    } else {
+                                        res.json({
+                                            success: false,
+                                            message: 'Authentication failed. Passwords did not match'
+                                        })
+                                    }
+                                })
+                            } else {
+                                res.json({success: false, message: 'User not found!'})
+                            }
                         })
-                        res.json({success: true, token: 'JWT ' + token})
-                    }else{
-                        res.json({success: false, message: 'Authentication failed. Passwords did not match'})
-                    }
-                })
-            }else{
-                res.json({success: false, message: 'User with this email not found'})
-            }
 
-        })
+                }
+
+            })
     }
-
 })
 
 module.exports = router
