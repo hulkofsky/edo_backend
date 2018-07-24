@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const postgres = require('pg')
 const port = 3000
 const router = express.Router()
-const projectRouter = require('./routes/homeRoutes')
+const homeRouter = require('./routes/homeRoutes')
+const authRouter = require('./routes/authRoutes')
 
 //morgan init
 app.use(morgan('dev'))
@@ -14,7 +15,8 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-app.use('/', projectRouter);
+app.use('/', homeRouter)
+app.use('/', authRouter)
 
 app.get('*', (req,res)=>{
     res.send('Oo oops!!')

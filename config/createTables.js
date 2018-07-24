@@ -99,6 +99,7 @@ const tables = [
     );`,
 
     `CREATE TABLE IF NOT EXISTS enterpreneurs(
+        id BIGSERIAL,
         company_name TEXT NOT NULL,
         vat_number TEXT NOT NULL,
         ceo_name TEXT NOT NULL,
@@ -111,12 +112,9 @@ const tables = [
         video_url TEXT,
         docs TEXT[],
         team_members INT[],
-        
         email_conf BOOLEAN NOT NULL,
         phone_conf BOOLEAN NOT NULL,
-        bank_uid TEXT NOT NULL,
-        bank_details JSON NOT NULL,
-        purchases INT[]
+        projects INT[]
     );`,
 
     `CREATE TABLE IF NOT EXISTS content(

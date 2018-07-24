@@ -7,6 +7,8 @@ const contents = require('./tables/content')
 const company_contacts = require('./tables/conpany_contacts')
 const banks = require('./tables/banks')
 const purchase_statuses = require('./tables/purchase_statuses')
+const investors = require('./tables/investors')
+const enterpreneurs = require('./tables/enterpreneurs')
 
 //connecting to postgres
 const postgresClient = new Client({
@@ -22,14 +24,17 @@ postgresClient.connect((err)=>{
         console.log('Postgres connected!')
 })
 
+//project
 const Project = Bookshelf.Model.extend({
     tableName: 'projects',
     uuid: true
 })
+
 const Projects = Bookshelf.Collection.extend({
     model: Project
 })
 
+//project status
 const Project_status = Bookshelf.Model.extend({
     tableName: 'project_statuses',
 })
@@ -37,6 +42,7 @@ const Project_statuses = Bookshelf.Collection.extend({
     model: Project_status
 })
 
+//language content
 const Content = Bookshelf.Model.extend({
     tableName: 'content',
 })
@@ -44,6 +50,7 @@ const Contents = Bookshelf.Collection.extend({
     model: Content
 })
 
+//company contacts
 const Company_contact = Bookshelf.Model.extend({
     tableName: 'company_contacts',
 })
@@ -51,6 +58,7 @@ const Company_contacts = Bookshelf.Collection.extend({
     model: Company_contact
 })
 
+//bank
 const Bank = Bookshelf.Model.extend({
     tableName: 'banks',
 })
@@ -58,28 +66,99 @@ const Banks = Bookshelf.Collection.extend({
     model: Bank
 })
 
+//purchase status
 const Purchase_status = Bookshelf.Model.extend({
     tableName: 'purchase_statuses',
     uuid: true
 })
+
 const Purchase_statuses = Bookshelf.Collection.extend({
     model: Purchase_status
 })
 
-//table purchase_statuses
-purchase_statuses.forEach((item, i)=>{
-    Purchase_status.forge({
-        status_id: item.status_id,
-        status_name: item.status_name
+//investors
+const Investor = Bookshelf.Model.extend({
+    tableName: 'investors',
+})
+
+const Investors = Bookshelf.Collection.extend({
+    model: Investor
+})
+
+//enterpreneurs
+const Enterpreneur = Bookshelf.Model.extend({
+    tableName: 'enterpreneurs',
+})
+
+const Enterpreneurs = Bookshelf.Collection.extend({
+    model: Enterpreneur
+})
+
+//table enterpreneurs
+enterpreneurs.forEach((item, i)=>{
+    Enterpreneur.forge({
+        company_name: item.company_name,
+        vat_number: item.vat_number,
+        ceo_name: item.ceo_name,
+        country_of_registration: item.country_of_registration,
+        company_email: item.company_email,
+        company_phone: item.company_phone,
+        funding_sum: item.funding_sum,
+        last_year_sales: item.last_year_sales,
+        password: item.password,
+        video_url: item.video_url,
+        docs: item.docs,
+        team_members: item.team_members,
+        email_conf: item.email_conf,
+        phone_conf: item.phone_conf,
+        projects: item.projects
     })
         .save()
         .then(content=>{
-            console.log(`Purchase_status ${i} successfully inserted`)
+            console.log(`Enterpreneur ${i} successfully inserted`)
         })
         .catch(err=>{
-            console.log(`Error while inserting Purchase_status ${i} - ${err}`)
+            console.log(`Error while inserting Enterpreneur ${i} - ${err}`)
         })
 })
+
+// //table investors
+// investors.forEach((item, i)=>{
+//     Investor.forge({
+//         first_name: item.first_name,
+//         last_name: item.last_name,
+//         email: item.email,
+//         phone: item.phone,
+//         bank_id: item.bank_id,
+//         password: item.password,
+//         account_number: item.account_number,
+//         email_conf: item.email_conf ,
+//         phone_conf: item.phone_conf,
+//         purchased_projects: item.purchased_projects
+//     })
+//         .save()
+//         .then(content=>{
+//             console.log(`Investor ${i} successfully inserted`)
+//         })
+//         .catch(err=>{
+//             console.log(`Error while inserting Investor ${i} - ${err}`)
+//         })
+// })
+
+// //table purchase_statuses
+// purchase_statuses.forEach((item, i)=>{
+//     Purchase_status.forge({
+//         status_id: item.status_id,
+//         status_name: item.status_name
+//     })
+//         .save()
+//         .then(content=>{
+//             console.log(`Purchase_status ${i} successfully inserted`)
+//         })
+//         .catch(err=>{
+//             console.log(`Error while inserting Purchase_status ${i} - ${err}`)
+//         })
+// })
 
 // //table banks
 // banks.forEach((item, i)=>{
