@@ -68,7 +68,7 @@ class Validation {
     }
 
     validateAccountNum(accountNumber){
-        const regexp = /^\d{20}$/
+        const regexp = /^\d{1,30}$/
 
         if(_.isEmpty(accountNumber)) {
             return false

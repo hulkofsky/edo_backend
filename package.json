@@ -19,6 +19,7 @@
     "knex": "^0.13.0",
     "lodash": "^4.17.10",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.7",
     "passport-jwt": "^4.0.0",
     "pg": "^7.4.3",
     "youtube-validate": "^1.2.4"

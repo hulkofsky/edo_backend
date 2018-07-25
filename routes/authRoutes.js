@@ -8,6 +8,7 @@ const Bookshelf = require('../config/database')
 const _ = require('lodash')
 const Validation = require('../utils/validation')
 const {validateUrl} = require('youtube-validate')
+const emailsender = require('../config/nodemailer')
 
 const validation = new Validation
 
@@ -292,6 +293,38 @@ router.post('/signin', (req,res)=> {
                                         })
                                     }
                                 })
+                            } else {
+                                res.json({success: false, message: 'User not found!'})
+                            }
+                        })
+
+                }
+
+            })
+    }
+})
+
+//forgot password
+router.post('/forgotpassword', (req,res)=>{
+    const email = req.body.email
+    if (!email) {
+        res.json({success: false, message: 'Pls enter email'})
+    } else {
+        Investor
+            .where({email: email})
+            .fetch()
+            .then(investorUser => {
+                if (investorUser) {
+                    //SEND EMAIL
+                    emailsender(email, 'der_parol')
+                } else {
+                    Enterpreneur
+                        .where({company_email: email})
+                        .fetch()
+                        .then(enterpreneurUser => {
+                            if (enterpreneurUser) {
+                                //SEND EMAIL
+                                emailsender(email, 'der_parol')
                             } else {
                                 res.json({success: false, message: 'User not found!'})
                             }
