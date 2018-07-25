@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {Client} = require('pg')
 const keys = require('../config/keys')
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Bookshelf = require('../config/database')
 const _ = require('lodash')
@@ -76,6 +76,7 @@ router.post('/signupinvestor', (req,res)=>{
             if (err) {
                 console.log(err, 'while crypting password')
             }else{
+                console.log(hash, 'hashed password on registration')
                 //serching bank id in table BANKS
                 Bank
                 .where({name: userData.bank_name})
@@ -248,8 +249,6 @@ router.post('/signin', (req,res)=> {
             .fetch()
             .then(investorUser => {
                 if (investorUser) {
-                    console.log(investorUser.attributes.password, 'investor pass in db')
-                    console.log(password, 'entered password')
                     bcrypt.compare(password, investorUser.attributes.password, (err, isMatch) => {
                         if (err) {
                             console.log(err)
@@ -259,7 +258,7 @@ router.post('/signin', (req,res)=> {
                             })
                         }
                         if (isMatch) {
-                            const token = jwt.sign(investorUser, keys.secret, {
+                            const token = jwt.sign(investorUser.attributes, keys.secret, {
                                 expiresIn: 10000 //in seconds
                             })
                             res.json({success: true, token: 'JWT ' + token})
@@ -273,8 +272,6 @@ router.post('/signin', (req,res)=> {
                         .fetch()
                         .then(enterpreneurUser => {
                             if (enterpreneurUser) {
-                                console.log(enterpreneurUser.attributes.password, 'enterpreneur pass in DB')
-                                console.log(password, 'entered password')
                                 bcrypt.compare(password, enterpreneurUser.attributes.password, (err, isMatch) => {
                                     if (err) {
                                         console.log(err)
